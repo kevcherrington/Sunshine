@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -14,48 +12,54 @@ import android.widget.Toast;
 public class MainActivity extends ActionBarActivity {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    private final String FORECASTFRAGMENT_TAG = "FFTAG";
+
     private SharedPreferences prefs;
+    private String location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(LOG_TAG, "On Create Called");
+        location = Utility.getPreferredLocation(this);
         super.onCreate(savedInstanceState);
 //        PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new ForecastFragment())
+                    .add(R.id.container, new ForecastFragment(), FORECASTFRAGMENT_TAG)
                     .commit();
         }
     }
 
     @Override
     protected void onDestroy() {
-        Log.d(LOG_TAG, "On Destroy Called");
         super.onDestroy();
     }
 
     @Override
     protected void onPause() {
-        Log.d(LOG_TAG, "On Pause Called");
         super.onPause();
     }
 
     @Override
     protected void onResume() {
-        Log.d(LOG_TAG, "On Resume Called");
         super.onResume();
+        String storedLocation = Utility.getPreferredLocation(this);
+        if (storedLocation != null && !storedLocation.equals(location)) {
+            ForecastFragment ff = (ForecastFragment) getSupportFragmentManager().findFragmentByTag(FORECASTFRAGMENT_TAG);
+            if (ff != null) {
+                ff.onLocationChanged();
+            }
+            location = storedLocation;
+        }
     }
 
     @Override
     protected void onStop() {
-        Log.d(LOG_TAG, "On Stop Called");
         super.onStop();
     }
 
     @Override
     protected void onStart() {
-        Log.d(LOG_TAG, "On Start Called");
         super.onStart();
     }
 
