@@ -11,13 +11,11 @@
         <TextView
             android:id="@+id/detail_day_textview"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TODAY!!!"/>
+            android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/detail_date_textview"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sep 30!!!"/>
+            android:layout_height="wrap_content"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,13 +31,11 @@
                 <TextView
                     android:id="@+id/detail_high_textview"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1000"/>
+                    android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/detail_low_textview"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-1000"/>
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
             <LinearLayout
@@ -52,33 +48,28 @@
                 <ImageView
                     android:id="@+id/detail_icon"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/art_clear"/>
+                    android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/detail_forecast_textview"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="CLEAR!!!"/>
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
         </LinearLayout>
 
         <TextView
             android:id="@+id/detail_humidity_textview"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Humid"/>
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/detail_wind_textview"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="WINDY"/>
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/detail_presssure_textview"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Aaah... the Pressure..."/>
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
