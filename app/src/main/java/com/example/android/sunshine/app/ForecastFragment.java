@@ -53,6 +53,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     static final int COL_COORD_LONG = 8;
 
     public ForecastAdapter forecastAdapter;
+    public boolean mUseTodayLayout;
     public ListView mListView;
     private int mPosition;
 
@@ -84,6 +85,13 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         return super.onOptionsItemSelected(item);
     }
 
+    public void setUseTodayLayout(boolean useTodayLayout) {
+        mUseTodayLayout = useTodayLayout;
+        if (forecastAdapter != null) {
+            forecastAdapter.setUseTodayLayout(mUseTodayLayout);
+        }
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         getLoaderManager().initLoader(FORECAST_LOADER_ID, null, this);
@@ -110,6 +118,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
                 null, null, null, sortOrder);
 
         forecastAdapter = new ForecastAdapter(getActivity(), cur, 0);
+        forecastAdapter.setUseTodayLayout(mUseTodayLayout);
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
