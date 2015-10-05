@@ -191,6 +191,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             String description = data.getString(COL_WEATHER_DESC);
             descriptionView.setText(description);
 
+            iconView.setContentDescription(description);
+
             // Read high temperature from cursor and update view
             boolean isMetric = Utility.isMetric(getActivity());
 
