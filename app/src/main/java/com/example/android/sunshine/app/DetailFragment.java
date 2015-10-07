@@ -88,6 +88,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     private TextView humidityView;
     private TextView windView;
     private TextView pressureView;
+    private CompassView compassView;
 
     /**
      * Create a new instance of DetailsFragment, initialized to
@@ -130,6 +131,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         humidityView = (TextView) rootView.findViewById(R.id.detail_humidity_textview);
         windView = (TextView) rootView.findViewById(R.id.detail_wind_textview);
         pressureView = (TextView) rootView.findViewById(R.id.detail_presssure_textview);
+        compassView = (CompassView) rootView.findViewById(R.id.compass_view);
         return rootView;
     }
 
@@ -210,9 +212,11 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             humidityView.setText(getActivity().getString(R.string.format_humidity, humidity));
 
             // Read wind speed and direction from cursor and update view
-            float windSpeedStr = data.getFloat(COL_WEATHER_WIND_SPEED);
-            float windDirStr = data.getFloat(COL_WEATHER_DEGREES);
-            windView.setText(Utility.getFormattedWind(getActivity(), windSpeedStr, windDirStr));
+            float windSpeedFloat = data.getFloat(COL_WEATHER_WIND_SPEED);
+            float windDirFloat = data.getFloat(COL_WEATHER_DEGREES);
+            windView.setText(Utility.getFormattedWind(getActivity(), windSpeedFloat, windDirFloat));
+
+            compassView.setWindSpeedDir(windSpeedFloat, windDirFloat);
 
             // Read pressure from cursor and update view
             float pressure = data.getFloat(COL_WEATHER_PRESSURE);
