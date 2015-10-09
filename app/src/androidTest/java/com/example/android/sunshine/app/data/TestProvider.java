@@ -33,8 +33,6 @@ import com.example.android.sunshine.app.data.WeatherContract.WeatherEntry;
 /*
     Note: This is not a complete set of tests of the Sunshine ContentProvider, but it does test
     that at least the basic functionality has been implemented correctly.
-    Students: Uncomment the tests in this class as you implement the functionality in your
-    ContentProvider to make sure that you've implemented things reasonably correctly.
  */
 public class TestProvider extends AndroidTestCase {
 
@@ -45,8 +43,6 @@ public class TestProvider extends AndroidTestCase {
        It also queries the ContentProvider to make sure that the database has been successfully
        deleted, so it cannot be used until the Query and Delete functions have been written
        in the ContentProvider.
-       Students: Replace the calls to deleteAllRecordsFromDB with this one after you have written
-       the delete functionality in the ContentProvider.
      */
     public void deleteAllRecordsFromProvider() {
         mContext.getContentResolver().delete(
@@ -95,10 +91,6 @@ public class TestProvider extends AndroidTestCase {
         db.close();
     }
 
-    /*
-        Student: Refactor this function to use the deleteAllRecordsFromProvider functionality once
-        you have implemented delete functionality there.
-     */
     public void deleteAllRecords() {
         deleteAllRecordsFromDB();
     }
@@ -111,10 +103,6 @@ public class TestProvider extends AndroidTestCase {
         deleteAllRecords();
     }
 
-    /*
-        This test checks to make sure that the content provider is registered correctly.
-        Students: Uncomment this test to make sure you've correctly registered the WeatherProvider.
-     */
     public void testProviderRegistry() {
         PackageManager pm = mContext.getPackageManager();
 
@@ -141,8 +129,6 @@ public class TestProvider extends AndroidTestCase {
     /*
             This test doesn't touch the database.  It verifies that the ContentProvider returns
             the correct type for each type of URI that it can handle.
-            Students: Uncomment this test to verify that your implementation of GetType is
-            functioning correctly.
          */
     public void testGetType() {
         // content://com.example.android.sunshine.app/weather/
@@ -275,9 +261,6 @@ public class TestProvider extends AndroidTestCase {
         assertEquals(count, 1);
 
         // Test to make sure our observer is called.  If not, we throw an assertion.
-        //
-        // Students: If your code is failing here, it means that your content provider
-        // isn't calling getContext().getContentResolver().notifyChange(uri, null);
         tco.waitForNotificationOrFail();
 
         locationCursor.unregisterContentObserver(tco);
@@ -300,10 +283,6 @@ public class TestProvider extends AndroidTestCase {
 
 
     // Make sure we can still delete after adding/updating stuff
-    //
-    // Student: Uncomment this test after you have completed writing the insert functionality
-    // in your provider.  It relies on insertions with testInsertReadProvider, so insert and
-    // query functionality must also be complete before this test can be used.
     public void testInsertReadProvider() {
         ContentValues testValues = TestUtilities.createNorthPoleLocationValues();
 
@@ -312,8 +291,6 @@ public class TestProvider extends AndroidTestCase {
         mContext.getContentResolver().registerContentObserver(LocationEntry.CONTENT_URI, true, tco);
         Uri locationUri = mContext.getContentResolver().insert(LocationEntry.CONTENT_URI, testValues);
 
-        // Did our content observer get called?  Students:  If this fails, your insert location
-        // isn't calling getContext().getContentResolver().notifyChange(uri, null);
         tco.waitForNotificationOrFail();
         mContext.getContentResolver().unregisterContentObserver(tco);
 
@@ -348,9 +325,6 @@ public class TestProvider extends AndroidTestCase {
                 .insert(WeatherEntry.CONTENT_URI, weatherValues);
         assertTrue(weatherInsertUri != null);
 
-        // Did our content observer get called?  Students:  If this fails, your insert weather
-        // in your ContentProvider isn't calling
-        // getContext().getContentResolver().notifyChange(uri, null);
         tco.waitForNotificationOrFail();
         mContext.getContentResolver().unregisterContentObserver(tco);
 
@@ -406,10 +380,6 @@ public class TestProvider extends AndroidTestCase {
     }
 
     // Make sure we can still delete after adding/updating stuff
-    //
-    // Student: Uncomment this test after you have completed writing the delete functionality
-    // in your provider.  It relies on insertions with testInsertReadProvider, so insert and
-    // query functionality must also be complete before this test can be used.
     public void testDeleteRecords() {
         testInsertReadProvider();
 
@@ -423,9 +393,6 @@ public class TestProvider extends AndroidTestCase {
 
         deleteAllRecordsFromProvider();
 
-        // Students: If either of these fail, you most-likely are not calling the
-        // getContext().getContentResolver().notifyChange(uri, null); in the ContentProvider
-        // delete.  (only if the insertReadProvider is succeeding)
         locationObserver.waitForNotificationOrFail();
         weatherObserver.waitForNotificationOrFail();
 
@@ -457,10 +424,6 @@ public class TestProvider extends AndroidTestCase {
         return returnContentValues;
     }
 
-    // Student: Uncomment this test after you have completed writing the BulkInsert functionality
-    // in your provider.  Note that this test will work with the built-in (default) provider
-    // implementation, which just inserts records one-at-a-time, so really do implement the
-    // BulkInsert ContentProvider function.
     public void testBulkInsert() {
         // first, let's create a location value
         ContentValues testValues = TestUtilities.createNorthPoleLocationValues();
@@ -496,9 +459,6 @@ public class TestProvider extends AndroidTestCase {
 
         int insertCount = mContext.getContentResolver().bulkInsert(WeatherEntry.CONTENT_URI, bulkInsertContentValues);
 
-        // Students:  If this fails, it means that you most-likely are not calling the
-        // getContext().getContentResolver().notifyChange(uri, null); in your BulkInsert
-        // ContentProvider method.
         weatherObserver.waitForNotificationOrFail();
         mContext.getContentResolver().unregisterContentObserver(weatherObserver);
 
