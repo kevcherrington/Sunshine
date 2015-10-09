@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.android.sunshine.app.sync.SunshineSyncAdapter;
 
@@ -105,27 +104,9 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
-            case R.id.action_map:
-                return openPreferredLocationInMap();
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private boolean openPreferredLocationInMap() {
-        String loc = Utility.getPreferredLocation(this);
-
-        Uri uri = Uri.parse("geo:0,0?").buildUpon()
-                .appendQueryParameter("q", Uri.encode(loc)).build();
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW);
-        mapIntent.setData(uri);
-
-        if (mapIntent.resolveActivity(getPackageManager()) != null) {
-            startActivity(mapIntent);
-        } else {
-            Toast.makeText(this, "Unable to find suitable Map App", Toast.LENGTH_SHORT).show(); // Magic error string put error message into strings.
-        }
-        return true;
     }
 
     @Override
