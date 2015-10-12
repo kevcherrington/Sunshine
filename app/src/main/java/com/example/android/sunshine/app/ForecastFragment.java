@@ -204,8 +204,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     private void openPreferredLocationInMap() {
         if (forecastAdapter != null) {
             Cursor c = forecastAdapter.getCursor();
-            if (c != null) {
-                c.moveToPosition(0);
+            if (c != null && c.moveToFirst()) {
                 String posLat = c.getString(COL_COORD_LAT);
                 String posLong = c.getString(COL_COORD_LONG);
                 Uri geoLocation = Uri.parse("geo:" + posLat + "," + posLong);
@@ -218,6 +217,8 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
                 } else {
                     Log.d(LOG_TAG, "Couldn't call " + geoLocation.toString() + ", no receiving apps installed!");
                 }
+            } else {
+                Log.e(LOG_TAG, "There are not items in the db to get location data from.");
             }
         }
     }

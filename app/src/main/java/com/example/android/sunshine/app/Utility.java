@@ -17,14 +17,22 @@ package com.example.android.sunshine.app;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.preference.PreferenceManager;
 import android.text.format.Time;
+import android.util.Log;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
 
 public class Utility {
+    private static final String LOG_TAG = Utility.class.getSimpleName();
+    public static final String API_KEY = "api_key";
+
     // Format used for storing dates in the database.  ALso used for converting those strings
     // back into date objects for comparison/processing.
     public static final String DATE_FORMAT = "yyyyMMdd";
@@ -249,4 +257,20 @@ public class Utility {
         }
         return -1;
     }
+
+    public static String getApiKey(Context context) {
+        String apiKey = null;
+        try {
+            InputStream rawResource = context.getResources().openRawResource(R.raw.sunshine);
+            Properties properties = new Properties();
+            properties.load(rawResource);
+            apiKey = properties.getProperty(API_KEY);
+        } catch (Resources.NotFoundException e) {
+            Log.e(LOG_TAG, "Unable to find resource: ", e);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Unable to open resource: ", e);
+        }
+        return apiKey;
+    }
+
 }
